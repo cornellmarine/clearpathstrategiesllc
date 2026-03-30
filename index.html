@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearPath Strategies — Military-Grade Problem Solving for Complex Organizations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1f35;
+      --navy-mid: #162d4a;
+      --gold: #c49a3c;
+      --gold-light: #e0b96a;
+      --sand: #f5f0e8;
+      --white: #ffffff;
+      --text: #1a1a1a;
+      --text-light: #5a5a5a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(13, 31, 53, 0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 2px;
+      font-weight: 500 !important;
+    }
+
+    .nav-cta:hover { background: var(--gold-light); color: var(--navy) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(196,154,60,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,154,60,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-accent {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 520px;
+      height: 520px;
+      border: 1px solid rgba(196,154,60,0.15);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-accent::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border: 1px solid rgba(196,154,60,0.1);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 10rem 3rem 6rem;
+      max-width: 760px;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+
+    .hero-eyebrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-eyebrow span {
+      color: var(--gold);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 2.75rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 0.85rem 2rem;
+      border-radius: 2px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.8);
+      padding: 0.85rem 2rem;
+      border-radius: 2px;
+      font-weight: 400;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── PROOF BAR ── */
+    .proof-bar {
+      background: var(--navy-mid);
+      padding: 1.5rem 3rem;
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(196,154,60,0.2);
+    }
+
+    .proof-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .proof-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .proof-item span {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 6rem 3rem;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-label-line {
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-label span {
+      color: var(--gold);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+    }
+
+    .about-image {
+      min-height: 480px;
+      background: url('https://images.squarespace-cdn.com/content/v1/68a34b1b9cb9573000ea9cd9/8709cf00-bc89-4f73-b8ad-455efd958d6b/Portraits+for+Patriots+-+David+Saunders+35594_9.jpg') center/cover no-repeat;
+      position: relative;
+    }
+
+    .about-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13,31,53,0.2) 0%, transparent 60%);
+    }
+
+    .about-text {
+      padding: 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--white);
+    }
+
+    .about-text h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      color: var(--text-light);
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      font-weight: 300;
+    }
+
+    .about-stat-row {
+      display: flex;
+      gap: 2.5rem;
+      margin: 2rem 0;
+      padding: 1.75rem 0;
+      border-top: 1px solid #e8e0d0;
+      border-bottom: 1px solid #e8e0d0;
+    }
+
+    .about-stat strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .about-stat span {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      background: var(--sand);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: #d4ccc0;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2.75rem 2.25rem;
+      position: relative;
+      transition: background 0.25s;
+    }
+
+    .service-card:hover { background: var(--navy); }
+
+    .service-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: rgba(196,154,60,0.15);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.25s;
+    }
+
+    .service-card:hover .service-number { color: rgba(196,154,60,0.25); }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      transition: color 0.25s;
+    }
+
+    .service-card:hover h3 { color: var(--white); }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      font-weight: 300;
+      transition: color 0.25s;
+    }
+
+    .service-card:hover p { color: rgba(255,255,255,0.65); }
+
+    .service-arrow {
+      display: inline-block;
+      margin-top: 1.5rem;
+      color: var(--gold);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    /* ── APPROACH ── */
+    .approach {
+      background: var(--navy);
+      max-width: 100%;
+    }
+
+    .approach-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .approach h2 { color: var(--white); margin-bottom: 3.5rem; }
+    .approach .section-label span { color: var(--gold); }
+
+    .approach-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .approach-steps::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: calc(12.5% + 16px);
+      right: calc(12.5% + 16px);
+      height: 1px;
+      background: rgba(196,154,60,0.25);
+    }
+
+    .step {
+      padding: 0 1.5rem;
+      padding-top: 0;
+    }
+
+    .step-dot {
+      width: 45px;
+      height: 45px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      background: var(--navy);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-dot span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .step h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+
+    .step p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial {
+      background: var(--gold);
+      padding: 5rem 3rem;
+    }
+
+    .testimonial-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .testimonial cite {
+      font-style: normal;
+      font-size: 0.85rem;
+      color: var(--navy-mid);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--sand);
+      text-align: center;
+      padding: 7rem 3rem;
+    }
+
+    .cta-section h2 {
+      margin-bottom: 1.25rem;
+    }
+
+    .cta-section p {
+      color: var(--text-light);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      border-top: 1px solid rgba(196,154,60,0.2);
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .footer-info {
+      text-align: right;
+    }
+
+    .footer-info p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.8;
+    }
+
+    .footer-info a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-info a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.1rem 1.5rem; }
+      .nav-links { display: none; }
+
+      .hero-content { padding: 8rem 1.5rem 4rem; }
+
+      .about-strip { grid-template-columns: 1fr; }
+      .about-image { min-height: 300px; }
+      .about-text { padding: 3rem 1.75rem; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      #engagements > div > div[style] { grid-template-columns: 1fr !important; }
+
+      section { padding: 4rem 1.5rem; }
+
+      .approach-steps { grid-template-columns: 1fr 1fr; gap: 2.5rem 1rem; }
+      .approach-steps::before { display: none; }
+
+      footer { flex-direction: column; text-align: center; }
+      .footer-info { text-align: center; }
+
+      .proof-bar { padding: 1.25rem 1.5rem; gap: 1.5rem; }
+
+      .services-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">ClearPath Strategies</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#bio">Bio</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#engagements">Work</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#contact" class="nav-cta">Work with Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span>Military-Grade Problem Solving</span>
+      </div>
+      <h1>When the problem is hard,<br><em>clarity</em> is the strategy.</h1>
+      <p class="hero-sub">ClearPath brings 20+ years of military experience and rigorous analytical discipline to help organizations untangle complex problems, align their teams, and move forward with confidence.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Schedule a Call</a>
+        <a href="#services" class="btn-ghost">See Our Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF BAR -->
+  <div class="proof-bar">
+    <div class="proof-item">
+      <svg class="proof-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      <span>20+ Years Military Leadership</span>
+    </div>
+    <div class="proof-item">
+      <svg class="proof-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+      </svg>
+      <span>Rapid Problem Framing &amp; Clarity</span>
+    </div>
+    <div class="proof-item">
+      <svg class="proof-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+      </svg>
+      <span>Organizational Alignment &amp; Strategy</span>
+    </div>
+    <div class="proof-item">
+      <svg class="proof-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Provincetown, MA — Serving Clients Nationwide</span>
+    </div>
+  </div>
+
+  <!-- ABOUT STRIP -->
+  <div class="about-strip" id="about">
+    <div class="about-image">
+      <div class="about-image-overlay"></div>
+    </div>
+    <div class="about-text fade-in">
+      <div class="section-label">
+        <div class="section-label-line"></div>
+        <span>About Dave</span>
+      </div>
+      <h2>Forged in the field.<br>Built for the boardroom.</h2>
+      <div class="about-stat-row">
+        <div class="about-stat">
+          <strong>20+</strong>
+          <span>Years Marine Corps Service</span>
+        </div>
+        <div class="about-stat">
+          <strong>4</strong>
+          <span>Advanced Degrees</span>
+        </div>
+        <div class="about-stat">
+          <strong>Cornell</strong>
+          <span>B.S. Civil Engineering</span>
+        </div>
+      </div>
+      <p>Dave Saunders is a retired Marine Corps officer with over two decades of experience leading complex planning efforts across the Pacific, Afghanistan, and the highest levels of the Pentagon — including serving on the Commandant of the Marine Corps Action Group.</p>
+      <p>He founded ClearPath on a simple belief: the problem-solving disciplines that work in high-stakes military environments work everywhere else too — and most organizations never get access to them.</p>
+      <a href="#bio" class="btn-primary" style="align-self: flex-start; margin-top: 0.5rem;">Read Full Bio</a>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services">
+      <div class="services-header fade-in">
+        <div>
+          <div class="section-label">
+            <div class="section-label-line"></div>
+            <span>What We Do</span>
+          </div>
+          <h2>Services tailored<br>to your mission.</h2>
+        </div>
+        <a href="#contact" class="btn-primary">Get Started</a>
+      </div>
+      <div class="services-grid fade-in">
+        <div class="service-card">
+          <div class="service-number">01</div>
+          <h3>Problem Framing</h3>
+          <p>Most organizations don't fail because they lack solutions — they fail because they're solving the wrong problem. ClearPath's Problem Framing engagements help you slow down at the right moment, precisely defining the challenge before committing time, money, and people to addressing it. We surface assumptions, clarify the real stakes, and hand you a shared understanding that makes the path forward undeniable.</p>
+          <a href="#contact" class="service-arrow">Let's talk →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-number">02</div>
+          <h3>Strategic Planning</h3>
+          <p>A strategy that lives in a document isn't a strategy — it's a wish. ClearPath helps small businesses and mission-driven organizations build plans that are grounded in reality, owned by the people who execute them, and resilient enough to hold up when conditions change. We bring the same disciplined planning frameworks used in high-stakes military environments and translate them into practical tools your team can use.</p>
+          <a href="#contact" class="service-arrow">Let's talk →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-number">03</div>
+          <h3>Team &amp; Organizational Alignment</h3>
+          <p>When a team isn't aligned, you can feel it — in slow decisions, repeated conversations, and energy spent on internal friction instead of the mission. ClearPath facilitates the structured conversations that surface what's really going on, build genuine shared understanding, and get people pulling in the same direction. This isn't team-building for its own sake. It's alignment with a purpose.</p>
+          <a href="#contact" class="service-arrow">Let's talk →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-number">04</div>
+          <h3>Workshop Facilitation</h3>
+          <p>Some of the most important work an organization can do happens in a room — if the room is structured well. ClearPath designs and facilitates working sessions that generate real decisions, not just good discussions. Whether you need a leadership offsite, a strategic planning session, or a focused problem-solving workshop, we bring structure, neutrality, and the experience to keep things moving toward outcomes.</p>
+          <a href="#contact" class="service-arrow">Let's talk →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL BIO -->
+  <section id="bio" style="background: var(--white); padding: 6rem 3rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="section-label fade-in">
+        <div class="section-label-line"></div>
+        <span>Full Biography</span>
+      </div>
+      <h2 class="fade-in" style="margin-bottom: 2.5rem;">David E. Saunders</h2>
+
+      <div class="fade-in" style="font-size: 1rem; color: var(--text-light); line-height: 1.9; font-weight: 300;">
+        <p style="margin-bottom: 1.25rem;">Dave Saunders is a retired United States Marine Corps officer and the founder of ClearPath Strategies. Over more than two decades of service, he built a career at the intersection of strategic planning, organizational leadership, and complex problem solving — working across some of the most demanding environments in the world.</p>
+
+        <p style="margin-bottom: 1.25rem;">Dave served at the highest levels of Marine Corps leadership, including as Deputy of the Commandant of the Marine Corps Action Group — a small team responsible for providing holistic policy and strategy recommendations directly to the Commandant. He led strategy and force design analysis at Headquarters Marine Corps for over three years, translating national security documents into actionable Marine Corps guidance and leading a ten-person team of senior analysts. Earlier in his career, he served as a Future Operations Planner for III Marine Expeditionary Force in Okinawa, Japan, leading contingency and crisis planning for an organization of over 30,000 personnel across the Pacific.</p>
+
+        <p style="margin-bottom: 1.25rem;">His operational experience includes a combat deployment to Afghanistan, where he orchestrated the closure of an austere forward operating base — coordinating the simultaneous drawdown of 3,000 personnel, $65 million in equipment, remediation of 320 acres of land, and the demolition of 15 structures. He also led the military's COVID response planning on Okinawa in early 2020, standing up a joint crisis team from scratch before most organizations had begun to respond.</p>
+
+        <p style="margin-bottom: 1.25rem;">Dave has worked extensively in multi-national and interagency environments, including bilateral engagements with the Japanese Ministry of Defense and Foreign Affairs, multi-national planning exercises in the Philippines, and most recently as an adjunct professor at the Saudi Arabian National Guard's Command and General Staff College in Riyadh, where he taught future military leaders to use history as a framework for critical thinking.</p>
+
+        <p style="margin-bottom: 1.25rem;">He holds a Bachelor of Science in Civil Engineering from Cornell University, a Master of Arts in International Relations from Webster University, a Master of Arts in Operational Studies from the Marine Corps School of Advanced Warfighting, and a Master of Arts in National Security Studies from the U.S. Army War College. He is an Olmsted Scholar — a highly selective fellowship that placed him at Mohammed V University in Rabat, Morocco for deep cultural and language immersion — and a fellow of MIT's Seminar XXI national security program. He holds an active Top Secret security clearance and has conversational Arabic.</p>
+
+        <p style="margin-bottom: 2rem;">Dave lives on Cape Cod with his wife and children. He founded ClearPath to make the problem-solving disciplines of military strategic planning available to the nonprofits, startups, and mission-driven organizations that need them most.</p>
+
+        <a href="#contact" class="btn-primary">Work with Dave</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section class="approach" id="approach">
+    <div class="approach-inner">
+      <div class="section-label fade-in">
+        <div class="section-label-line"></div>
+        <span>How We Work</span>
+      </div>
+      <h2 class="fade-in" style="color: var(--white); margin-bottom: 3.5rem;">A disciplined approach<br>to every engagement.</h2>
+      <div class="approach-steps fade-in">
+        <div class="step">
+          <div class="step-dot"><span>1</span></div>
+          <h4>Listen &amp; Diagnose</h4>
+          <p>We start by understanding your organization deeply — its goals, its culture, and the real nature of the problem you're facing.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot"><span>2</span></div>
+          <h4>Frame the Problem</h4>
+          <p>Most teams jump to solutions. We invest in precision upfront — defining the problem clearly so the path forward is undeniable.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot"><span>3</span></div>
+          <h4>Build the Plan</h4>
+          <p>Drawing on your team's collective expertise, we co-develop a strategy that is practical, owned, and built to execute.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot"><span>4</span></div>
+          <h4>Move &amp; Adapt</h4>
+          <p>Plans meet reality. We stay with you through execution, helping you navigate what changes and hold what matters.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL PLACEHOLDER -->
+  <div class="testimonial">
+    <div class="testimonial-inner">
+      <blockquote>"Dave brought a level of structured thinking to our leadership team that we simply didn't have before. He didn't just give us a plan — he changed how we think about problems."</blockquote>
+      <cite>— Executive Client &nbsp;·&nbsp; [Add real testimonial here]</cite>
+    </div>
+  </div>
+
+  <!-- SELECTED ENGAGEMENTS -->
+  <section id="engagements" style="background: var(--sand); padding: 6rem 3rem;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <div class="section-label fade-in">
+        <div class="section-label-line"></div>
+        <span>Selected Engagements</span>
+      </div>
+      <h2 class="fade-in" style="margin-bottom: 3.5rem;">Work that speaks<br>for itself.</h2>
+
+      <div class="fade-in" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: #d4ccc0;">
+
+        <div style="background: var(--white); padding: 2.5rem 2.25rem;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: rgba(196,154,60,0.15); line-height: 1; margin-bottom: 1.25rem;">01</div>
+          <div style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.75rem;">Higher Education · Strategic Planning</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.85rem; line-height: 1.3;">5-Year Strategic Plan, Small Liberal Arts College</h3>
+          <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.75; font-weight: 300;">Led the full arc of a 5-year strategic planning engagement — from initial problem framing through board approval. Work included developing assessment criteria, integrating budget planning, and building a phased implementation timeline. The plan was adopted in full by the institution's board of directors.</p>
+        </div>
+
+        <div style="background: var(--white); padding: 2.5rem 2.25rem;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: rgba(196,154,60,0.15); line-height: 1; margin-bottom: 1.25rem;">02</div>
+          <div style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.75rem;">Defense Technology · Advisory &amp; Product</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.85rem; line-height: 1.3;">Planning Advisory &amp; User Enablement, Defense Tech Startup</h3>
+          <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.75; font-weight: 300;">Advised an early-stage defense technology firm on the application of their AI agent to military planning contexts. Served as a super user to stress-test the product, identify gaps, and develop a library of doctrinally sound planning templates — enabling end users to conduct rigorous military planning without prior expertise.</p>
+        </div>
+
+        <div style="background: var(--white); padding: 2.5rem 2.25rem;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: rgba(196,154,60,0.15); line-height: 1; margin-bottom: 1.25rem;">03</div>
+          <div style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.75rem;">Government · Force Design</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.85rem; line-height: 1.3;">Force Design Advisory, Military Client</h3>
+          <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.75; font-weight: 300;">Provided subject matter expertise to a military client navigating a complex force design process. Identified structural roadblocks, developed recommended solutions, and advised on ways to streamline and better integrate the planning process — drawing on direct experience shaping Marine Corps force design at the headquarters level.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="section-label fade-in" style="justify-content: center;">
+      <div class="section-label-line"></div>
+      <span>Get In Touch</span>
+    </div>
+    <h2 class="fade-in">Ready to find your path?</h2>
+    <p class="fade-in">Whether you're stuck, scaling, or simply need a second set of eyes — we're here for the conversation. No pitch, no pressure.</p>
+    <div class="fade-in" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="tel:5083489373" class="btn-primary">Call (508) 348-9373</a>
+      <a href="mailto:contact@clearpathstrategiesllc.com" class="btn-ghost" style="border-color: #aaa; color: var(--text);">Send an Email</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">ClearPath Strategies</div>
+    <div class="footer-info">
+      <p>3 Freeman St, Suite 2 · Provincetown, MA 02657</p>
+      <p><a href="tel:5083489373">(508) 348-9373</a> &nbsp;·&nbsp; <a href="mailto:contact@clearpathstrategiesllc.com">contact@clearpathstrategiesllc.com</a></p>
+      <p style="margin-top:0.5rem; color: rgba(255,255,255,0.25); font-size:0.72rem;">© 2025 ClearPath Strategies, LLC</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-ins
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
