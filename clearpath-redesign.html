@@ -870,7 +870,7 @@
     <p class="fade-in">Whether you're stuck, scaling, or simply need a second set of eyes — we're here for the conversation. No pitch, no pressure.</p>
     <div class="fade-in" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
       <a href="tel:5083489373" class="btn-primary">Call (508) 348-9373</a>
-      <a href="/cdn-cgi/l/email-protection#95f6fafbe1f4f6e1d5f6f9f0f4e7e5f4e1fde6e1e7f4e1f0f2fcf0e6f9f9f6bbf6faf8" class="btn-ghost" style="border-color: #aaa; color: var(--text);">Send an Email</a>
+      <a href="mailto:contact@clearpathstrategiesllc.com" class="btn-ghost" style="border-color: #aaa; color: var(--text);">Send an Email</a>
     </div>
   </section>
 
@@ -879,11 +879,23 @@
     <div class="footer-logo">ClearPath Strategies</div>
     <div class="footer-info">
       <p>3 Freeman St, Suite 2 · Provincetown, MA 02657</p>
-      <p><a href="tel:5083489373">(508) 348-9373</a> &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection#e2818d8c96838196a2818e8783909283968a919690839687858b87918e8e81cc818d8f"><span class="__cf_email__" data-cfemail="ed8e8283998c8e99ad8e81888c9f9d8c99859e999f8c99888a84889e81818ec38e8280">[email&#160;protected]</span></a></p>
+      <p><a href="tel:5083489373">(508) 348-9373</a> &nbsp;·&nbsp; <a href="mailto:contact@clearpathstrategiesllc.com">contact@clearpathstrategiesllc.com</a></p>
       <p style="margin-top:0.5rem; color: rgba(255,255,255,0.25); font-size:0.72rem;">© 2025 ClearPath Strategies, LLC</p>
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // Scroll-triggered fade-ins
-    const observer = new Intersect
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
